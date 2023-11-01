@@ -1,15 +1,22 @@
-from headhunter import HeadHunterAPI
+# from headhunter import HeadHunterAPI
+#
+# hh_api = HeadHunterAPI()
+# hh_vacancies = hh_api.get_vacancies("Python")
 
-hh_api = HeadHunterAPI()
-hh_vacancies = hh_api.get_vacancies("Python")
+# class MixinAPIOUT:
+#
+#     def get_response(self, response):
+#
+#         response =
+#         return response.get_
 
-class Vacancy:
+class Vacancy():
     """
     Класс для вакансии
 
     """
 
-    vacancies = []
+    # vacancies = []
 
     def __init__(self, name: str, url: str, salary: str, requirement: str) -> None:
         """
@@ -26,22 +33,25 @@ class Vacancy:
         self.salary = salary
         self.requirement = requirement
 
-        Vacancy.vacancies.append(self)
+        # for item in data['items']:
+        #     vacancy = Vacancy(name=item['name'], url=item['url'], salary=item['salary'],
+        #                       requirement=item['snippet']['requirement'])
+
+        # Vacancy.vacancies.append(self)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name}, {self.salary}, {self.url}'
 
     def __repr__(self):
         return f'{self.name}'
 
+#
 
-for item in hh_vacancies['items']:
-    name = item['name']
-    url = item['url']
-    salary = item['salary']
-    requirements = item['snippet']['requirement']
-
-    vacancy = Vacancy(name, url, salary, requirements)
-
-for vacancy in Vacancy.vacancies:
-    print(vacancy)
+#
+# for item in hh_vacancies['items']:
+#     name = item['name']
+#     url = item['url']
+#     salary = item['salary']
+#     requirements = item['snippet']['requirement']
+#
+#     vacancy = Vacancy(name, url, salary, requirements)
