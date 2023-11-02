@@ -10,7 +10,7 @@
 #         response =
 #         return response.get_
 
-class Vacancy():
+class Vacancy:
     """
     Класс для вакансии
 
@@ -44,6 +44,8 @@ class Vacancy():
 
     def __repr__(self):
         return f'{self.name}'
+
+# Добавить сравнения
 
 #
 

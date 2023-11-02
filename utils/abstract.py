@@ -7,6 +7,7 @@ class abstract_api(ABC):
     def get_vacancies(self, filter_vacancy):
         pass
 
+
     # @abstractmethod
     # def save_to_json(self, data, file):
     #     pass

@@ -30,3 +30,5 @@ class SuperJobAPI(abstract_api):
         return self.response
 
 
+sj = SuperJobAPI()
+print(sj.get_vacancies("Python"))

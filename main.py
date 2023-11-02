@@ -1,9 +1,9 @@
 from utils.headhunter import HeadHunterAPI
 from utils.superjob import SuperJobAPI
 from utils.vacancy import Vacancy
-from utils.JSONsaver import JSONSaver
+# from utils.JSONsaver import JSONSaver
 import json
-from utils.abstract import abstract_api
+# from utils.abstract import abstract_api
 
 
 # Создание экземпляра класса для работы с API сайтов с вакансиями
@@ -15,7 +15,8 @@ from utils.abstract import abstract_api
 # superjob_vacancies = superjob_api.get_vacancies("Python")
 
 # Создание экземпляра класса для работы с вакансиями
-# vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.", "Требования: опыт работы от 3 лет...")
+# vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.",
+#                   "Требования: опыт работы от 3 лет...")
 
 # Сохранение информации о вакансиях в файл
 # json_saver = JSONSaver()
@@ -54,7 +55,6 @@ def user_interaction():
     with open('./data/vacansies_sj.json', 'w', encoding='utf-8') as file:
         json.dump(data_, file, ensure_ascii=False, indent=2)
 
-    dict = {}
     list_hh = []
     list_sj = []
     for item_hh in data['items']:
@@ -75,7 +75,9 @@ def user_interaction():
 
         list_sj.append(vacancy)
 
+    dict_ = {"HH": list_hh, "SJ": list_sj}
 
+    # print(dict_)
 
     # for item_hh in list_hh:
     #     print(item_hh)
@@ -84,10 +86,7 @@ def user_interaction():
         print(item)
 
 
-
-
 user_interaction()
-
 
 # if __name__ == "main.py":
 #     user_interaction()

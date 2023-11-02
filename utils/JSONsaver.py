@@ -17,6 +17,8 @@ class JSONSaver:
         # with open('../datavacansies.json', 'w', encoding='utf-8') as file:
         #     json.dump(response, file, ensure_ascii=False, indent=2)
 
+# лоавбить метод чтения из файла, который сразу содзаст лист экземпляров вакансий(либо поделить)
+
 
 # vacancy = Vacancy('Python', 'url', '100000руб', 'blabla')
 # print(vacancy)

@@ -15,9 +15,11 @@ class HeadHunterAPI(abstract_api):
         """
         Метод для получения вакансий
         """
-        self.params = {"text": filter_vacancy}
+        self.params = {"text": f"NAME:{filter_vacancy}"}
         self.response = requests.get(self.url, self.params).content.decode()
         return self.response
+
+# Отфильтровать зарплату (убрать null)
 
 
 # hh = HeadHunterAPI()
