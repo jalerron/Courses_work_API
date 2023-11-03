@@ -1,17 +1,22 @@
 from utils.vacancy import Vacancy
 import json
+from pathlib import Path
 
+ROOT = Path('../').parent
+DATA_PATH = Path.joinpath(ROOT, 'data')
+FILE_PATH = Path.joinpath(DATA_PATH, 'vacansies.json')
+path = FILE_PATH
 
 class JSONSaver:
     """
-    Класс для Json
+    Класс для работы с Json
     """
 
     def save_to_json(self, data):
         """
-        Запись вакансий в Json
+        Запись вакансий в Json-файл
         """
-        path = './data/vacansies.json'
+
         with open(path, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
@@ -24,25 +29,18 @@ class JSONSaver:
 
         vacancies_list = []
 
-        for item in data:
+        for item in data:  # Создание экземпялов класса Vacancy
             vacancy = Vacancy(
                 name=item["name"],
                 area=item["area"],
                 url=item["url"],
                 salary_from=item["salary_from"],
                 salary_to=item["salary_to"],
-                requirement=item["requirement"]
+                requirement=item["requirement"],
+                currency=item["currency"]
             )
-            vacancy.currency = item["currency"]
             vacancy.platform = item["platform"]
 
             vacancies_list.append(vacancy)
 
         return vacancies_list
-# лоавбить метод чтения из файла, который сразу содзаст лист экземпляров вакансий(либо поделить)
-
-
-# vacancy = Vacancy('Python', 'url', '100000руб', 'blabla')
-# print(vacancy)
-# json_saver = JSONSaver()
-# json_saver.add_vacancy(vacancy)

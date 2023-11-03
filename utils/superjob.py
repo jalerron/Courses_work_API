@@ -1,8 +1,8 @@
 # info:
 #     ID	3137
 #     Secret key	v3.r.137928314.de44b68cf145a1d94b50f46b0cc1e515e9d2030e.40956abe621d1de195432691420866bf2e5003ca
+import os
 import requests
-import json
 from utils.abstract import abstract_api
 
 
@@ -10,7 +10,7 @@ class SuperJobAPI(abstract_api):
     """
     Класс для работы с API_Superjob.ru
     """
-    API_KEY = "v3.r.137928314.de44b68cf145a1d94b50f46b0cc1e515e9d2030e.40956abe621d1de195432691420866bf2e5003ca"
+    __API_KEY: str = os.getenv('SJ_API_KEY')
 
     def __init__(self):
         """
@@ -18,7 +18,7 @@ class SuperJobAPI(abstract_api):
         """
 
         self.url = 'https://api.superjob.ru/2.0/vacancies/'
-        self.headers = {'X-Api-App-Id': self.API_KEY}
+        self.headers = {'X-Api-App-Id': self.__API_KEY}
 
     def get_vacancies(self, filter_vacancy: str):
         """
@@ -36,7 +36,7 @@ class SuperJobAPI(abstract_api):
         data = self.response
         filtered_vacancies = []
 
-        for item in data:
+        for item in data:  # Создание словаря с одинаковым содержанием
 
             vacancy = {
                 "platform": "SJ",
@@ -46,14 +46,9 @@ class SuperJobAPI(abstract_api):
                 "salary_from": item["payment_from"],
                 "salary_to": item["payment_to"],
                 "currency": item["currency"],
-                "requirement": item["candidat"]
+                "requirement": item["candidat"].strip('\n')
             }
 
             filtered_vacancies.append(vacancy)
 
         return filtered_vacancies
-
-
-# sj = SuperJobAPI()
-# sj.get_vacancies("Python")
-# print(sj.filtered_vacancies())

@@ -14,6 +14,7 @@ class HeadHunterAPI(abstract_api):
         """
         Метод для получения вакансий
         """
+
         self.params = {"text": f"NAME:{filter_vacancy}"}
         self.response = requests.get(self.url, self.params).json()["items"]
         return self.response
@@ -25,7 +26,9 @@ class HeadHunterAPI(abstract_api):
         data = self.response
         filtered_vacancies = []
 
-        for item in data:
+        for item in data:  # Создание словаря с одинаковым содержанием
+
+            # Избавляемся от проблем с зарплатой типа null
             if item["salary"]:
                 salary_from = item["salary"]["from"] if item["salary"]["from"] else 0
                 salary_to = item["salary"]["to"] if item["salary"]["to"] else 0
@@ -39,7 +42,7 @@ class HeadHunterAPI(abstract_api):
                 "platform": "HH",
                 "name": item["name"],
                 "area": item["area"]["name"],
-                "url": item["url"],
+                "url": item["alternate_url"],
                 "salary_from": salary_from,
                 "salary_to": salary_to,
                 "currency": currency,
@@ -49,36 +52,3 @@ class HeadHunterAPI(abstract_api):
             filtered_vacancies.append(vacancy)
 
         return filtered_vacancies
-
-
-# Отфильтровать зарплату (убрать null)
-
-
-# hh = HeadHunterAPI()
-# hh.get_vacancies("python")
-# print(hh.filtered_vacancies())
-#
-# data = json.loads(hh.get_vacancies("Python"))
-#
-# list_vacancy = []
-# for item in data['items']:
-#     vacancy = Vacancy(name=item['name'], url=item['url'], salary=item['salary'],
-#                       requirement=item['snippet']['requirement'])
-#     dict_ = {
-#         "name": vacancy.name,
-#         "url": vacancy.url,
-#         "salary": vacancy.salary,
-#         "requirement": vacancy.requirement
-#     }
-#     list_vacancy.append(dict_)
-#
-# for item in list_vacancy:
-#     print(item)
-
-# with open('vacansies2.json', 'w+', encoding='utf-8') as file:
-#     json.dump(list_vacancy, file, ensure_ascii=False, indent=4)
-# # df = pd.DataFrame(data)
-#
-#
-
-# print(df)

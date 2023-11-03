@@ -1,33 +1,33 @@
-from utils.headhunter import HeadHunterAPI
-from utils.superjob import SuperJobAPI
-from utils.JSONsaver import JSONSaver
-
+from utils.JSONsaver import JSONSaver, path
+from utils.functions import view_vacansies, print_vacansies, make_sort_by_currency
 
 
 def user_interaction():
 
-    list_vacansies = []
-
     filter_vacancy = input('Введите поисковый запрос: ')
+    top_n = input('Введите количество выводимое в топе вакансий по зарплате: ')
+    currency = input('Выберите валюту (1-Рубли, 2-Доллары): ')
+    platform = input('Выбирите платформу (1-HeadHunter, 2-SuperJOB, 3-обе): ')
 
-    hh = HeadHunterAPI()
-    sj = SuperJobAPI()
+    list_vacansies = view_vacansies(platform, filter_vacancy)
 
-    hh.get_vacancies(filter_vacancy)
-    hh_list = hh.filtered_vacancies()
-    sj.get_vacancies(filter_vacancy)
-    sj_list = sj.filtered_vacancies()
-
+    # Создаем экземпляр класса для записи данных в JSON и последующего вывода необходимых вакансий
     jsonsaver = JSONSaver()
-    list_vacansies.extend(hh_list)
-    list_vacansies.extend(sj_list)
-    # print(list_vacansies)
     jsonsaver.save_to_json(list_vacansies)
-    list_ = jsonsaver.read_from_file('./data/vacansies.json')
 
-    for item in sorted(list_, reverse=True):
-        print(f'{item.name}: {item.salary_from}-{item.salary_to} '
-              f'{item.currency.upper() if item.currency != "null" else ""}')
+    # Заполнение листа по валюте
+
+    if currency:
+        list_ = make_sort_by_currency(currency, jsonsaver.read_from_file(path))
+    else:
+        list_ = jsonsaver.read_from_file(path)
+
+    if len(list_) == 0:
+        print('Нет вакансий по данному запросу.')
+    else:
+        for item in sorted(list_, reverse=True)[:int(top_n)]:
+            print(print_vacansies(item))
 
 
-user_interaction()
+if __name__ == "__main__":
+    user_interaction()
