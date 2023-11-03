@@ -18,7 +18,7 @@ class Vacancy:
 
     # vacancies = []
 
-    def __init__(self, name: str, url: str, salary: str, requirement: str) -> None:
+    def __init__(self, name: str, area: str, url: str, salary_to: int, salary_from: int, requirement: str) -> None:
         """
         Инициализация класса
 
@@ -29,9 +29,13 @@ class Vacancy:
             requirement (_type_): str
         """
         self.name = name
+        self.area = area
         self.url = url
-        self.salary = salary
+        self.salary_to = salary_to
+        self.salary_from = salary_from
         self.requirement = requirement
+        self.currency = None
+        self.platform = None
 
         # for item in data['items']:
         #     vacancy = Vacancy(name=item['name'], url=item['url'], salary=item['salary'],
@@ -40,10 +44,16 @@ class Vacancy:
         # Vacancy.vacancies.append(self)
 
     def __str__(self):
-        return f'{self.name}, {self.salary}, {self.url}'
-
-    def __repr__(self):
         return f'{self.name}'
+
+    # def __repr__(self):
+    #     return f'{self.name}'
+
+    def __lt__(self, other):
+        return self.salary_from < other.salary_from
+
+    def __gt__(self, other):
+        return self.salary_from > other.salary_from
 
 # Добавить сравнения
 

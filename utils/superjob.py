@@ -26,9 +26,34 @@ class SuperJobAPI(abstract_api):
         """
 
         self.params = {"keyword": filter_vacancy}
-        self.response = requests.get(self.url, self.params, headers=self.headers).content.decode()
+        self.response = requests.get(self.url, self.params, headers=self.headers).json()["objects"]
         return self.response
 
+    def filtered_vacancies(self):
+        """
+        Фильтрация вакансий по необходимым тегам
+        """
+        data = self.response
+        filtered_vacancies = []
 
-sj = SuperJobAPI()
-print(sj.get_vacancies("Python"))
+        for item in data:
+
+            vacancy = {
+                "platform": "SJ",
+                "name": item["profession"],
+                "area": item["town"]["title"],
+                "url": item["link"],
+                "salary_from": item["payment_from"],
+                "salary_to": item["payment_to"],
+                "currency": item["currency"],
+                "requirement": item["candidat"]
+            }
+
+            filtered_vacancies.append(vacancy)
+
+        return filtered_vacancies
+
+
+# sj = SuperJobAPI()
+# sj.get_vacancies("Python")
+# print(sj.filtered_vacancies())
